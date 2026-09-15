@@ -534,26 +534,44 @@ function handleVehicleInput(target, dt, controls) {
   const left = controls.left.some((code) => keys[code]);
   const right = controls.right.some((code) => keys[code]);
 
+  const absSpeed = Math.abs(target.velocity);
+  const maxReverseSpeed = Math.max(6, target.maxSpeed * 0.25);
+  const accelForce = (target.carBase?.accel ?? 16) * (0.85 + Math.min(absSpeed / target.maxSpeed, 1) * 0.2);
+  const brakeForce = 22 + absSpeed * 0.75;
+
   if (accelerate) {
-    target.velocity += 16 * dt;
+    target.velocity += accelForce * dt;
   }
+
   if (brake) {
-    target.velocity -= 24 * dt;
+    target.velocity -= brakeForce * dt;
   }
 
   if (!accelerate && !brake) {
-    target.velocity *= 0.98;
+    const rollingResistance = 7 + absSpeed * 0.9;
+    if (target.velocity > 0) {
+      target.velocity = Math.max(0, target.velocity - rollingResistance * dt);
+    } else if (target.velocity < 0) {
+      target.velocity = Math.min(0, target.velocity + rollingResistance * dt);
+    }
   }
 
-  target.velocity = clamp(target.velocity, -10, target.maxSpeed);
+  target.velocity = clamp(target.velocity, -maxReverseSpeed, target.maxSpeed);
 
   const steerInput = (right ? 1 : 0) - (left ? 1 : 0);
-  const turningStrength = 0.8 + Math.abs(target.velocity) * 0.11;
-  target.angle += steerInput * turningStrength * dt * 1.8;
-  target.steering = THREE.MathUtils.lerp(target.steering, steerInput, 0.12);
+  const speedRatio = clamp(absSpeed / Math.max(target.maxSpeed, 1), 0, 1);
+  const steeringLimit = 1.05 - speedRatio * 0.45;
+  const desiredSteer = steerInput * steeringLimit;
+  target.steering = THREE.MathUtils.lerp(target.steering, desiredSteer, 0.12);
 
-  const forwardX = Math.sin(target.angle) * target.velocity * dt;
-  const forwardZ = Math.cos(target.angle) * target.velocity * dt;
+  const turnStrength = (0.9 + speedRatio * 1.8) * (0.7 + Math.abs(target.velocity) * 0.045);
+  const directionSign = target.velocity >= 0 ? 1 : -1;
+  target.angle += target.steering * turnStrength * dt * directionSign;
+
+  const forwardSpeed = target.velocity * (1 - Math.min(Math.abs(target.steering) * 0.18, 0.18));
+  const forwardX = Math.sin(target.angle) * forwardSpeed * dt;
+  const forwardZ = Math.cos(target.angle) * forwardSpeed * dt;
+
   target.position.x += forwardX;
   target.position.z += forwardZ;
 
