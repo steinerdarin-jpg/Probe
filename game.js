@@ -558,7 +558,7 @@ function handleVehicleInput(target, dt, controls) {
 
   target.velocity = clamp(target.velocity, -maxReverseSpeed, target.maxSpeed);
 
-  const steerInput = (right ? 1 : 0) - (left ? 1 : 0);
+  const steerInput = (left ? 1 : 0) - (right ? 1 : 0);
   const speedRatio = clamp(absSpeed / Math.max(target.maxSpeed, 1), 0, 1);
   const steeringLimit = 1.05 - speedRatio * 0.45;
   const desiredSteer = steerInput * steeringLimit;
