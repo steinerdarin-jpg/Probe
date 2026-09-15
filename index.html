@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Street Flex</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="hud">
+      <div class="brand">Street Flex</div>
+      <div id="status">Starterpaket aktiv</div>
+      <div class="stats">
+        <div><span>Geld</span><strong id="moneyDisplay">€450</strong></div>
+        <div><span>Auto</span><strong id="carDisplay">Toyota Corolla</strong></div>
+        <div><span>Leistung</span><strong id="powerDisplay">30 HP</strong></div>
+        <div><span>Rank</span><strong id="rankDisplay">Rookie I</strong></div>
+        <div><span>Mission</span><strong id="missionDisplay">Next Car: Civic</strong></div>
+      </div>
+      <div class="controls">P1: W/A/S/D = Fahren • Shift = Flex • E = Rennen starten<br />P2: I/J/K/L = Fahren • U = Flex</div>
+    </div>
+
+    <aside id="garage" class="panel">
+      <h3>Garage</h3>
+      <div class="garage-row">
+        <label>Farbe</label>
+        <select id="paintSelect">
+          <option value="#ff7b54">Orange</option>
+          <option value="#2dd4bf">Türkis</option>
+          <option value="#f43f5e">Rot</option>
+          <option value="#60a5fa">Blau</option>
+          <option value="#facc15">Gelb</option>
+          <option value="#a78bfa">Lila</option>
+        </select>
+      </div>
+
+      <div class="garage-row">
+        <label>Felgen</label>
+        <select id="wheelSelect">
+          <option value="stock">Stock</option>
+          <option value="sport">Sport</option>
+          <option value="deep">Deep Dish</option>
+        </select>
+      </div>
+
+      <div class="garage-row checklist">
+        <label><input id="spoilerToggle" type="checkbox" /> Spoiler</label>
+        <label><input id="neonToggle" type="checkbox" /> Neon</label>
+      </div>
+
+      <button id="applyStyleBtn" class="primary-btn">Style anwenden</button>
+
+      <div class="shop">
+        <h4>Garage Shop</h4>
+        <button class="shop-item" data-car="corolla">Toyota Corolla – €0</button>
+        <button class="shop-item" data-car="civic">Honda Civic Type R – €18.500</button>
+        <button class="shop-item" data-car="m3">BMW M3 – €42.000</button>
+        <button class="shop-item" data-car="gtr">Nissan GT-R – €76.000</button>
+        <button class="shop-item" data-car="porsche">Porsche 911 – €98.000</button>
+      </div>
+    </aside>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>
