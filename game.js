@@ -13,6 +13,13 @@ const camera = new THREE.PerspectiveCamera(68, window.innerWidth / window.innerH
 camera.position.set(0, 7, 14);
 
 const clock = new THREE.Clock();
+const startMenu = document.getElementById('startMenu');
+const startBtn = document.getElementById('startBtn');
+const hostGameBtn = document.getElementById('hostGameBtn');
+const joinGameBtn = document.getElementById('joinGameBtn');
+const roomCards = [...document.querySelectorAll('.room-card')];
+const hud = document.getElementById('hud');
+const garage = document.getElementById('garage');
 const uiStatus = document.getElementById('status');
 const moneyDisplay = document.getElementById('moneyDisplay');
 const carDisplay = document.getElementById('carDisplay');
@@ -25,6 +32,26 @@ const spoilerToggle = document.getElementById('spoilerToggle');
 const neonToggle = document.getElementById('neonToggle');
 const applyStyleBtn = document.getElementById('applyStyleBtn');
 const shopButtons = [...document.querySelectorAll('.shop-item')];
+
+let gameStarted = false;
+let selectedRoom = 'Downtown Drift';
+
+function beginGame() {
+  if (gameStarted) return;
+  gameStarted = true;
+  startMenu.classList.add('hidden');
+  hud.classList.remove('hidden');
+  garage.classList.remove('hidden');
+  uiStatus.textContent = `Lobby: ${selectedRoom}`;
+}
+
+function setSelectedRoom(roomName) {
+  selectedRoom = roomName;
+  roomCards.forEach((card) => {
+    const active = card.dataset.room === roomName;
+    card.classList.toggle('active', active);
+  });
+}
 
 const keys = {};
 const mouse = {
@@ -799,6 +826,21 @@ function animate() {
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
 }
+
+startBtn.addEventListener('click', beginGame);
+hostGameBtn.addEventListener('click', () => {
+  setSelectedRoom(selectedRoom || 'Downtown Drift');
+  uiStatus.textContent = `Host Game • ${selectedRoom}`;
+});
+joinGameBtn.addEventListener('click', () => {
+  setSelectedRoom(selectedRoom || 'Downtown Drift');
+  uiStatus.textContent = `Join Game • ${selectedRoom}`;
+});
+roomCards.forEach((card) => {
+  card.addEventListener('click', () => {
+    setSelectedRoom(card.dataset.room);
+  });
+});
 
 document.addEventListener('keydown', (event) => {
   keys[event.code] = true;

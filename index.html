@@ -7,7 +7,92 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="hud">
+    <div id="startMenu" class="start-menu">
+      <div class="menu-card">
+        <div class="menu-topbar">
+          <div class="menu-brand">Street Flex</div>
+          <div class="status-pill">ONLINE</div>
+        </div>
+
+        <div class="menu-layout">
+          <section class="panel-box login-panel">
+            <p class="eyebrow">Access</p>
+            <h2>Login / Admin</h2>
+
+            <label>
+              <span>Spielername</span>
+              <input type="text" value="Racer_01" />
+            </label>
+
+            <label>
+              <span>Passwort</span>
+              <input type="password" value="admin" />
+            </label>
+
+            <label>
+              <span>Admin-Code</span>
+              <input type="text" value="1212" />
+            </label>
+
+            <div class="login-actions">
+              <button class="action-btn ghost-btn" type="button">Admin</button>
+              <button class="action-btn primary-btn" type="button">Login</button>
+            </div>
+          </section>
+
+          <section class="panel-box rooms-panel">
+            <div class="rooms-header">
+              <div>
+                <p class="eyebrow">Live Rooms</p>
+                <h2>Stadtserver</h2>
+              </div>
+              <button class="mini-btn" type="button">Refresh</button>
+            </div>
+
+            <div class="room-list">
+              <button class="room-card active" type="button" data-room="Downtown Drift">
+                <span class="room-name">Downtown Drift</span>
+                <span class="room-meta">12 Spieler • Normal</span>
+              </button>
+              <button class="room-card" type="button" data-room="Neon Circuit">
+                <span class="room-name">Neon Circuit</span>
+                <span class="room-meta">8 Spieler • Ranked</span>
+              </button>
+              <button class="room-card" type="button" data-room="Sunset Rush">
+                <span class="room-name">Sunset Rush</span>
+                <span class="room-meta">15 Spieler • Public</span>
+              </button>
+              <button class="room-card" type="button" data-room="Underground Crew">
+                <span class="room-name">Underground Crew</span>
+                <span class="room-meta">6 Spieler • Private</span>
+              </button>
+            </div>
+
+            <div class="menu-actions">
+              <button id="hostGameBtn" class="action-btn host-btn" type="button">Host Game</button>
+              <button id="joinGameBtn" class="action-btn join-btn" type="button">Join Game</button>
+            </div>
+          </section>
+        </div>
+
+        <div class="menu-footer">
+          <div class="menu-section">
+            <h3>Spielanleitung</h3>
+            <ul>
+              <li>W / A / S / D = fahren und lenken</li>
+              <li>Shift = Flex-Stunt</li>
+              <li>E = Rennen im Stadtbereich starten</li>
+              <li>Rechtsklick halten = Kamera ausrichten</li>
+              <li>Garage = Auto stylen und kaufen</li>
+            </ul>
+          </div>
+
+          <button id="startBtn" class="menu-btn" type="button">Spiel starten</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="hud" class="hidden">
       <div class="brand">Street Flex</div>
       <div id="status">Starterpaket aktiv</div>
       <div class="stats">
@@ -20,7 +105,7 @@
       <div class="controls">P1: W/A/S/D = Fahren • Shift = Flex • E = Rennen starten<br />P2: I/J/K/L = Fahren • U = Flex</div>
     </div>
 
-    <aside id="garage" class="panel">
+    <aside id="garage" class="panel hidden">
       <h3>Garage</h3>
       <div class="garage-row">
         <label>Farbe</label>
